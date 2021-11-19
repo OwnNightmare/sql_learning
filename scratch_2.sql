@@ -33,7 +33,6 @@ FOREIGN KEY (genre_id) REFERENCES Genre (genre_id)
 ALTER TABLE track
 ADD CONSTRAINT unique_track UNIQUE(track_name);
 
-
 CREATE TABLE if NOT EXISTS Mixtape(
 mixtape_id SERIAL,
 mixtape_name VARCHAR(30) NOT NULL,
@@ -47,3 +46,6 @@ CONSTRAINT PK_mixtape PRIMARY KEY(mixtape_id)
  FOREIGN KEY (track_id) REFERENCES track(track_id),
  FOREIGN KEY (mixtape_id) REFERENCES Mixtape(mixtape_id)
  );
+
+ ALTER TABLE TrackMixtape
+ RENAME CONSTRAINT track_and_mixtape_ids TO PK_TrackMixtape;
