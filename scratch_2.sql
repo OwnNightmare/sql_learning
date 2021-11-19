@@ -31,9 +31,6 @@ FOREIGN KEY (genre_id) REFERENCES Genre (genre_id)
 );
 
 ALTER TABLE track
-ADD COLUMN genre_id INTEGER;
-
-ALTER TABLE track
 ADD CONSTRAINT unique_track UNIQUE(track_name);
 
 
