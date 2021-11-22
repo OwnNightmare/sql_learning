@@ -47,17 +47,49 @@ CONSTRAINT PK_mixtape PRIMARY KEY(mixtape_id)
  FOREIGN KEY (mixtape_id) REFERENCES Mixtape(mixtape_id)
  );
 
-ALTER TABLE TrackMixtape
-RENAME CONSTRAINT track_and_mixtape_ids TO PK_TrackMixtape;
-
 ALTER TABLE Mixtape
 ADD CONSTRAINT unique_mix UNIQUE(mixtape_name);
 
-ALTER TABLE Artist
-RENAME COLUMN artistname to artist_name;
-
-ALTER TABLE Artist
-RENAME COLUMN artistid to artist_id;
-
 ALTER TABLE Mixtape
 ADD COLUMN release_year INTEGER;
+
+ALTER TABLE Artist
+ADD CONSTRAINT unique_artist UNIQUE(artist_name);
+
+INSERT INTO Artist(artist_name)
+VALUES('Oxxxymiron')
+ON CONFLICT DO NOTHING;
+
+INSERT INTO Track(track_name, duration)
+VALUES('Moh', 175)
+ON CONFLICT DO NOTHING;
+
+INSERT INTO Genre(genre_name)
+VALUES('Hip-hop')
+ON CONFLICT DO NOTHING;
+
+INSERT INTO Album
+VALUES(1, 'Dark Time', 1, 2021)
+ON CONFLICT DO NOTHING;
+
+UPDATE Track
+    SET album_id = 1, genre_id = 2
+    WHERE track_id = 8;
+
+ INSERT INTO Mixtape(mixtape_name)
+ VALUES('Moh is all around us')
+ ON CONFLICT DO NOTHING;
+
+ UPDATE Mixtapes
+    SET release_year = 2020
+    WHERE mixtape_id = 2;
+
+ INSERT INTO TrackMixtape
+ VALUES(8,2)
+ ON CONFLICT DO NOTHING;
+
+ ALTER TABLE Genre
+ ADD CONSTRAINT unique_genre UNIQUE(genre_name);
+
+ ALTER TABLE Album
+ ADD CONSTRAINT unique_album UNIQUE(album_name);
