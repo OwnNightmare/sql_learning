@@ -1,3 +1,4 @@
 additional.sql
 Runner.py
 .idea
+__pycache__
