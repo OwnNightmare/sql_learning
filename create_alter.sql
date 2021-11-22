@@ -47,5 +47,17 @@ CONSTRAINT PK_mixtape PRIMARY KEY(mixtape_id)
  FOREIGN KEY (mixtape_id) REFERENCES Mixtape(mixtape_id)
  );
 
- ALTER TABLE TrackMixtape
- RENAME CONSTRAINT track_and_mixtape_ids TO PK_TrackMixtape;
+ALTER TABLE TrackMixtape
+RENAME CONSTRAINT track_and_mixtape_ids TO PK_TrackMixtape;
+
+ALTER TABLE Mixtape
+ADD CONSTRAINT unique_mix UNIQUE(mixtape_name);
+
+ALTER TABLE Artist
+RENAME COLUMN artistname to artist_name;
+
+ALTER TABLE Artist
+RENAME COLUMN artistid to artist_id;
+
+ALTER TABLE Mixtape
+ADD COLUMN release_year INTEGER;
