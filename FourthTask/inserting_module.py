@@ -69,51 +69,17 @@ def insert_albums():
         ON CONFLICT DO NOTHING""")
 
 
-def create_artists_and_albums():
-    artist = Table('Artist_', metadata,
-            Column('artist_id', Integer, autoincrement=True, primary_key=True),
-            Column('artist_name', String(40), unique=False)
-                   )
+def set_album_to_artist():
+    artist_id = 1
+    album_id = 1
+    for i in range(8):
+        connection.execute(f"""INSERT INTO Artists_album
+            (artist_id, album_id)
+            VALUES({artist_id}, {album_id})
+            ON CONFLICT DO NOTHING""")
+        artist_id += 1
+        album_id += 1
 
-    album = Table('Albums', metadata,
-           Column('album_id', Integer, autoincrement=True, primary_key=True),
-           Column('album_name', String(40), unique=False),
-           Column('release_year', Integer)
-                  )
-
-    artists_albums = Table('artists_albums', metadata,
-            Column('artist_id', Integer, ForeignKey('Artist_.artist_id'), primary_key=True),
-            Column('album_id', Integer, ForeignKey('Albums.album_id'), primary_key=True)
-    )
-    metadata.create_all(engine)
-
-    def insertion_alchemy():
-        try:
-            art_names = (['Maneskin', 'Oxxxymiron', 'Scorpions', 'Fio Rida', 'Imagine Dragons',
-                         'Twenty one pistols', 'OneRepublic', 'Ed Sheeran'])
-            alb_names = [('Teatro d`ira - Vol. I', 2021), ('ГорГород', 2015),
-                         ('Born to touch your feelings', 2017),
-                         ('In my mind Part 3', 2018), ('Origins', 2018),
-                         ('Trench', 2018), ('Human', 2021), ('=', 2018)
-                         ]
-            print(len(alb_names) == len(art_names))
-            for art_name in art_names:
-                ins = artist.insert().values(artist_name=art_name)
-                connection.execute(ins)
-            for alb_name in alb_names:
-                name, year = alb_name
-                ins_al = album.insert().values(album_name=name, release_year=year)
-                connection.execute(ins_al)
-        finally:
-            if len(alb_names) == len(art_names):
-                ar_id = 1
-                al_id = 1
-                for i in range(len(art_names)):
-                    ins = artists_albums.insert().values(artist_id=ar_id, album_id=al_id)
-                    connection.execute(ins)
-                    ar_id += 1
-                    al_id += 1
-    insertion_alchemy()
 
 
 def insert_genres():
@@ -276,19 +242,56 @@ def track_to_mix():
                     ON CONFLICT DO NOTHING""")
 
 
-def using_alchemy():
-    u = 'user_name'
-    user = Table('user', metadata,
-        Column('user_id', Integer, autoincrement=True, primary_key=True),
-        Column(u, String(30))
-                 )
+def create_via_metadata():
+    artist = Table('Artist_', metadata,
+            Column('artist_id', Integer, autoincrement=True, primary_key=True),
+            Column('artist_name', String(40), unique=False)
+                   )
+
+    album = Table('Albums', metadata,
+           Column('album_id', Integer, autoincrement=True, primary_key=True),
+           Column('album_name', String(40), unique=False),
+           Column('release_year', Integer)
+                  )
+
+    artists_albums = Table('artists_albums', metadata,
+            Column('artist_id', Integer, ForeignKey('Artist_.artist_id'), primary_key=True),
+            Column('album_id', Integer, ForeignKey('Albums.album_id'), primary_key=True)
+    )
     metadata.create_all(engine)
+
+    def insertion_alchemy():
+        try:
+            art_names = (['Maneskin', 'Oxxxymiron', 'Scorpions', 'Fio Rida', 'Imagine Dragons',
+                         'Twenty one pistols', 'OneRepublic', 'Ed Sheeran'])
+            alb_names = [('Teatro d`ira - Vol. I', 2021), ('ГорГород', 2015),
+                         ('Born to touch your feelings', 2017),
+                         ('In my mind Part 3', 2018), ('Origins', 2018),
+                         ('Trench', 2018), ('Human', 2021), ('=', 2018)
+                         ]
+            for art_name in art_names:
+                ins = artist.insert().values(artist_name=art_name)
+                connection.execute(ins)
+            for alb_name in alb_names:
+                name, year = alb_name
+                ins_al = album.insert().values(album_name=name, release_year=year)
+                connection.execute(ins_al)
+        finally:
+            if len(alb_names) == len(art_names):
+                ar_id = 1
+                al_id = 1
+                for i in range(len(art_names)):
+                    ins = artists_albums.insert().values(artist_id=ar_id, album_id=al_id)
+                    connection.execute(ins)
+                    ar_id += 1
+                    al_id += 1
+    insertion_alchemy()
 
 
 if __name__ == '__main__':
     insert_artist()
     insert_albums()
+    set_album_to_artist()
     insert_tracks()
     insert_mixtapes()
     track_to_mix()
-    create_artists_and_albums()
