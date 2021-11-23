@@ -4,7 +4,7 @@ artist_name VARCHAR(30) NOT NULL,
 CONSTRAINT PK_Artist PRIMARY KEY(artist_id)
 );
 
-CREATE TABLE if NOT EXISTS Album(
+CREATE TABLE iF NOT EXISTS Album(
 album_id SERIAL,
 album_name VARCHAR(40) NOT NULL,
 release_year INTEGER,
@@ -16,7 +16,7 @@ artist_id INTEGER,
 album_id INTEGER,
 CONSTRAINT PK_artist_album PRIMARY KEY(artist_id, album_id),
 FOREIGN KEY (artist_id) REFERENCES Artist(artist_id),
-FOREIGN KEY (genre_id) REFERENCES Genre(genre_id)
+FOREIGN KEY (album_id) REFERENCES Album(album_id)
 );
 
 CREATE TABLE if NOT EXISTS Genre(
@@ -28,7 +28,7 @@ CONSTRAINT PK_genre PRIMARY KEY(genre_id)
 CREATE TABLE if NOT EXISTS Artists_genre(
 artist_id INTEGER,
 genre_id INTEGER,
-CONSTRAINT PK_artists_genre PRIMARY KEY(artist_id, genre_id)
+CONSTRAINT PK_artists_genre PRIMARY KEY(artist_id, genre_id),
 FOREIGN KEY (artist_id) REFERENCES Artist(artist_id),
 FOREIGN KEY (genre_id) REFERENCES Genre(genre_id)
 );
@@ -51,12 +51,12 @@ CONSTRAINT PK_mixtape PRIMARY KEY(mixtape_id),
 CONSTRAINT unique_mix UNIQUE(mixtape_name)
 );
 
- CREATE TABLE if NOT EXISTS TrackMixtape(
- track_id INTEGER,
- mixtape_id INTEGER,
- CONSTRAINT track_and_mixtape_ids PRIMARY KEY(track_id, mixtape_id),
- FOREIGN KEY (track_id) REFERENCES track(track_id),
- FOREIGN KEY (mixtape_id) REFERENCES Mixtape(mixtape_id)
+CREATE TABLE if NOT EXISTS TrackMixtape(
+track_id INTEGER,
+mixtape_id INTEGER,
+CONSTRAINT track_and_mixtape_ids PRIMARY KEY(track_id, mixtape_id),
+FOREIGN KEY (track_id) REFERENCES track(track_id),
+FOREIGN KEY (mixtape_id) REFERENCES Mixtape(mixtape_id)
  );
 
 ALTER TABLE Mixtape

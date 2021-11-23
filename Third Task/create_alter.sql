@@ -51,12 +51,12 @@ CONSTRAINT PK_mixtape PRIMARY KEY(mixtape_id),
 CONSTRAINT unique_mix UNIQUE(mixtape_name)
 );
 
- CREATE TABLE if NOT EXISTS TrackMixtape(
- track_id INTEGER,
- mixtape_id INTEGER,
- CONSTRAINT track_and_mixtape_ids PRIMARY KEY(track_id, mixtape_id),
- FOREIGN KEY (track_id) REFERENCES track(track_id),
- FOREIGN KEY (mixtape_id) REFERENCES Mixtape(mixtape_id)
+CREATE TABLE if NOT EXISTS TrackMixtape(
+track_id INTEGER,
+mixtape_id INTEGER,
+CONSTRAINT track_and_mixtape_ids PRIMARY KEY(track_id, mixtape_id),
+FOREIGN KEY (track_id) REFERENCES track(track_id),
+FOREIGN KEY (mixtape_id) REFERENCES Mixtape(mixtape_id)
  );
 
 ALTER TABLE Mixtape
