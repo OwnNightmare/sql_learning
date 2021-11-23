@@ -16,7 +16,7 @@ artist_id INTEGER,
 album_id INTEGER,
 CONSTRAINT PK_artist_album PRIMARY KEY(artist_id, album_id),
 FOREIGN KEY (artist_id) REFERENCES Artist(artist_id),
-FOREIGN KEY (genre_id) REFERENCES Genre(genre_id)
+FOREIGN KEY (album_id) REFERENCES Album(album_id)
 );
 
 CREATE TABLE if NOT EXISTS Genre(
