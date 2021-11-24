@@ -70,7 +70,7 @@ def run_display():
     """)
     print(helping)
     while query not in ['q', 'exit']:
-        query = input('\tЗапрос или команда: ').lower()
+        query = input('\tЗапрос или команда: ').lower().strip()
         if query == 'al':
             print('Альбомы, вышедшие в 2018:')
             get_albums()
@@ -98,4 +98,5 @@ def run_display():
             print('Unknown query. h - help')
 
 
-run_display()
+if __name__ == '__main__':
+    run_display()

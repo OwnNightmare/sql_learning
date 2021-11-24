@@ -1,5 +1,6 @@
 import sqlalchemy
 from sqlalchemy import *
+
 metadata = MetaData()
 
 db = 'postgresql://me:password@localhost:5432/my_db'
@@ -284,28 +285,28 @@ if __name__ == '__main__':
     track_to_mix()
 
 
-def create_via_metadata():      # Not used
+def create_via_metadata():  # Not used
     artist = Table('Artist_', metadata,
-            Column('artist_id', Integer, autoincrement=True, primary_key=True),
-            Column('artist_name', String(40), unique=False)
+                   Column('artist_id', Integer, autoincrement=True, primary_key=True),
+                   Column('artist_name', String(40), unique=False)
                    )
 
     album = Table('Albums', metadata,
-           Column('album_id', Integer, autoincrement=True, primary_key=True),
-           Column('album_name', String(40), unique=False),
-           Column('release_year', Integer)
+                  Column('album_id', Integer, autoincrement=True, primary_key=True),
+                  Column('album_name', String(40), unique=False),
+                  Column('release_year', Integer)
                   )
 
     artists_albums = Table('artists_albums', metadata,
-            Column('artist_id', Integer, ForeignKey('Artist_.artist_id'), primary_key=True),
-            Column('album_id', Integer, ForeignKey('Albums.album_id'), primary_key=True)
-    )
+                           Column('artist_id', Integer, ForeignKey('Artist_.artist_id'), primary_key=True),
+                           Column('album_id', Integer, ForeignKey('Albums.album_id'), primary_key=True)
+                           )
     metadata.create_all(engine)
 
     def insertion_alchemy():
         try:
             art_names = (['Maneskin', 'Oxxxymiron', 'Scorpions', 'Fio Rida', 'Imagine Dragons',
-                         'Twenty one pistols', 'OneRepublic', 'Ed Sheeran'])
+                          'Twenty one pistols', 'OneRepublic', 'Ed Sheeran'])
             alb_names = [('Teatro d`ira - Vol. I', 2021), ('ГорГород', 2015),
                          ('Born to touch your feelings', 2017),
                          ('In my mind Part 3', 2018), ('Origins', 2018),
@@ -327,4 +328,5 @@ def create_via_metadata():      # Not used
                     connection.execute(ins)
                     ar_id += 1
                     al_id += 1
+
     insertion_alchemy()
