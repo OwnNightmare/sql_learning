@@ -61,7 +61,7 @@ def count_artists_in_genre():
      ON g.genre_id = a.genre_id
      GROUP BY genre_name
      ORDER BY genre_name ASC""").fetchall()
-    pprint(artists_numbers)
+    return artists_numbers
 
 
 def count_tracks_in_19_20():
@@ -69,7 +69,28 @@ def count_tracks_in_19_20():
     FROM track t JOIN album a 
     ON t.album_id = a.album_id
     WHERE a.release_year BETWEEN 2019 AND 2020""").fetchall()
-    pprint(track_numbers)
+    return track_numbers
+
+
+def find_avg_duration():
+    avg_duration = connection.execute("""SELECT AVG(duration) AS average_track_duration,
+    a.album_name AS album
+    FROM track t JOIN album a 
+    ON t.album_id = a.album_id
+    GROUP BY album
+    ORDER BY album""").fetchall()
+    return avg_duration
+
+
+def get_not_in_2020():
+    inactive_in_2020 = connection.execute("""SELECT distinct artist_name
+    FROM artist a 
+    JOIN artists_albums ab
+        ON a.artist_id = ab.artist_id
+    JOIN album al
+        ON ab.album_id = al.album_id
+    WHERE al.release_year <> 2020""").fetchall()
+    return inactive_in_2020
 
 
 if __name__ == '__main__':
