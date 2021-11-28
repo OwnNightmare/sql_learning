@@ -93,6 +93,60 @@ def get_not_in_2020():
     return inactive_in_2020
 
 
+def get_mix_with_maneskin():
+    mixes = connection.execute("""SELECT mixtape_name
+    FROM mixtape m JOIN trackmixtape tm 
+        ON m.mixtape_id = tm.mixtape_id
+    JOIN track t 
+        ON tm.track_id = t.track_id
+    JOIN artists_albums ab
+        ON t.album_id = ab.album_id
+    WHERE ab.artist_id = 1""").fetchall()
+    return mixes
+
+
+def get_feated_albums():
+    alb = connection.execute("""SELECT album_name
+        FROM album a JOIN artists_albums aa
+            ON a.album_id = aa.album_id
+        JOIN artists_genre ag
+            ON aa.artist_id = ag.artist_id
+        group by album_name 
+        having COUNT(distinct ag.genre_id) > 1""").fetchall()
+    return alb
+
+
+def get_not_in_mixes():
+    excluded = connection.execute("""SELECT track_name AS track
+        FROM track t left JOIN trackmixtape tm
+            ON t.track_id = tm.track_id
+        WHERE tm.track_id IS NULL""").fetchall()
+    return excluded
+
+
+def get_shortest_tracks():
+    shortest = connection.execute("""SELECT artist_name, track_name, duration
+        FROM track t JOIN artists_albums aa
+            ON t.album_id = aa.album_id
+        JOIN artist a
+            ON aa.artist_id = a.artist_id
+        WHERE duration = (SELECT MIN(duration) FROM track)""").fetchall()
+    return shortest
+
+
+def get_shortest_albums():
+    sh_al = connection.execute("""SELECT album_name
+        FROM album a JOIN track t
+            ON  a.album_id = t.album_id
+        GROUP BY album_name
+        HAVING COUNT(track_id) = (SELECT COUNT(track_id)
+            FROM track t JOIN album a
+                ON t.album_id = a.album_id 
+            GROUP BY album_name
+            LIMIT 1)""").fetchall()
+    return sh_al
+
+
 if __name__ == '__main__':
     count_artists_in_genre()
 

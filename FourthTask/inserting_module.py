@@ -86,7 +86,8 @@ def set_album_to_artist():
         album_id += 1
     connection.execute(f"""INSERT INTO Artists_albums
                 (artist_id, album_id)
-                VALUES({1}, {9})
+                VALUES({1}, {9}),
+                        (8, 7)
                 ON CONFLICT DO NOTHING""")
 
 
