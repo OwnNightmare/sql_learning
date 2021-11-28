@@ -4,5 +4,5 @@
 2. [ДЗ № 4](https://github.com/OwnNightmare/sql_learning/tree/master/FourthTask) 
 :white_check_mark: Это готово
 3. [Сложные запросы из нескольких таблиц](https://github.com/OwnNightmare/sql_learning/tree/master/FifthTask)
-:sleepy: Хочу спать(
+:wave:
 
