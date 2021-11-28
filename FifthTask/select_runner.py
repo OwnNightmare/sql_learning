@@ -73,7 +73,7 @@ def run_complex_select():
             print(pd.DataFrame(count_artists_in_genre()))
         elif query == 'tq':
             print('Число треков из альбомов 2019-2020: ')
-            print(pd.DataFrame(count_tracks_in_19_20()))
+            print(pd.DataFrame(count_tracks_in_19_20(), columns='tracks number'))
         elif query == 'avg':
             print('Ср. продолжительность треков по альбомам: ')
             print(pd.DataFrame(find_avg_duration()))
