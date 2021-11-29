@@ -1,5 +1,4 @@
 from selecting_module import *
-import pandas as pd
 
 
 def run_simple_select():
@@ -52,15 +51,15 @@ def run_complex_select():
     query = ''
     helping = ("""
         \t\t\t'SQL запросы:  
-        'aq' - 1) количество исполнителей в каждом жанре;
-        'tq' - 2) количество треков, вошедших в альбомы 2019-2020 годов;
-        'avg' - 3) средняя продолжительность треков по каждому альбому;
-        'ex' - 4) все исполнители, которые не выпустили альбомы в 2020 году;
-        'man' - 5) Сборники, где есть Maneskin;
-        'fa' - 6) название альбомов, в которых присутствуют исполнители более 1 жанра;
-        'nu' - 7) наименование треков, которые не входят в сборники
-        'min' - 8) исполнителя, написавшего самый короткий по продолжительности трек;
-        'sa' - 9) Самые "маленькие" альбомы;
+        '1' - количество исполнителей в каждом жанре;
+        '2' - количество треков, вошедших в альбомы 2019-2020 годов;
+        '3' - средняя продолжительность треков по каждому альбому;
+        '4' - все исполнители, которые не выпустили альбомы в 2020 году;
+        '5' - Сборники, где есть Maneskin;
+        '6' - название альбомов, в которых присутствуют исполнители более 1 жанра;
+        '7' - наименование треков, которые не входят в сборники
+        '8' - исполнитель(и), написавший самый короткий по продолжительности трек;
+        '9' - самые "маленькие" альбомы;
         \t\t\tКоманды: 
         'h' - вызов данной справки;
         'q', 'exit' - выход
@@ -68,33 +67,33 @@ def run_complex_select():
     print(helping)
     while query not in ['q', 'exit']:
         query = input('\t\nЗапрос или команда: ').lower().strip()
-        if query == 'aq':
+        if query == '1':
             print('Количество исполнителей по жанрам:')
-            print(pd.DataFrame(count_artists_in_genre()))
-        elif query == 'tq':
+            print(count_artists_in_genre())
+        elif query == '2':
             print('Число треков из альбомов 2019-2020: ')
-            print(pd.DataFrame(count_tracks_in_19_20(), columns='tracks number'))
-        elif query == 'avg':
+            print(count_tracks_in_19_20())
+        elif query == '3':
             print('Ср. продолжительность треков по альбомам: ')
-            print(pd.DataFrame(find_avg_duration()))
-        elif query == 'man':
-            print('Сборники, где есть Maneskin: ')
-            print(pd.DataFrame(get_mix_with_maneskin()))
-        elif query == 'fa':
-            print('Альбомы от артистов разных жанров: ')
-            print(pd.DataFrame(get_feated_albums()))
-        elif query == 'ex':
+            print(find_avg_duration())
+        elif query == '4':
             print('Не выпускали альбомы в 2020: ')
-            print(pd.DataFrame(get_not_in_2020()))
-        elif query == 'nu':
+            print(get_not_in_2020())
+        elif query == '5':
+            print('Сборники, где есть Maneskin: ')
+            print(get_mix_with_maneskin())
+        elif query == '6':
+            print('Альбомы от артистов разных жанров: ')
+            print(get_feated_albums())
+        elif query == '7':
             print('Этих треков нет в сборниках: ')
-            print(pd.DataFrame(get_not_in_mixes()))
-        elif query == 'min':
+            print(get_not_in_mixes())
+        elif query == '8':
             print('Самые короткие треки и их исполнители: ')
-            print(pd.DataFrame(get_shortest_tracks()))
-        elif query == 'sa':
-            print('Альбомы, с нимаеньшим числом треков: ')
-            print(pd.DataFrame(get_shortest_albums()))
+            print(get_shortest_tracks())
+        elif query == '9':
+            print('Альбомы с наимаеньшим числом треков: ')
+            print(get_shortest_albums())
         elif query == 'back':
             return 'main menu'
         elif query == 'h':
@@ -103,7 +102,7 @@ def run_complex_select():
         elif query in ['q', 'exit']:
             exit('Завершение сеанса')
         else:
-            print('Unknown query. h - help')
+            print('Unknown query. h - help, q- exit')
 
 
 def run_main_menu():
